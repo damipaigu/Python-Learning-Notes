@@ -1,0 +1,4023 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Python3 Official Tutorial Notebook}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \subsection{Python Built-in functions playground - 75 in
+total}\label{python-built-in-functions-playground---75-in-total}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{c+c1}{\PYZsh{} all(iterable) return True if all elements of iterable are True}
+        
+        \PY{n}{my\PYZus{}list} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{o}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Text}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{k+kc}{True}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{c+c1}{\PYZsh{} list elements can be different types}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{My list is: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ }\PY{l+s+si}{\PYZob{}my\PYZus{}list\PYZcb{}}\PY{l+s+s2}{, }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ the result of all() is: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{all(my\PYZus{}list)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}} \PY{o}{*} \PY{l+m+mi}{15}\PY{p}{)}
+        \PY{n}{my\PYZus{}list}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} \PYZsq{}\PYZsq{} 空字符 被当做False处理。}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{My list is updated as: }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ }\PY{l+s+si}{\PYZob{}my\PYZus{}list\PYZcb{}}\PY{l+s+s2}{, }\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s2}{ the result of all() is now: }\PY{l+s+s2}{\PYZob{}}\PY{l+s+s2}{all(my\PYZus{}list)\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+My list is: 
+ ['o', 1, 2, 'Text', True, 'abc'], 
+ the result of all() is: True
+***************
+My list is updated as: 
+ ['o', 1, 2, 'Text', True, 'abc', ''], 
+ the result of all() is now: False
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{c+c1}{\PYZsh{} any() similar to all()}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{any}\PY{p}{(}\PY{n}{my\PYZus{}list}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+True
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{c+c1}{\PYZsh{} ascii() returns the ascii string of a string. 我理解为ascii的参数是想要输出的内容，ascii的结果为对应的输入。相当于给定输出求输入？？}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{ascii}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{ascii}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}\PYZbs{}}\PY{l+s+s2}{n}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{ascii}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0b10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{2}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{ascii}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0b10}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+True
+True
+False
+'0b10'
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{c+c1}{\PYZsh{} bin() Convert an integer number to a binary string prefixed with “0b”.}
+        
+        \PY{n+nb}{bin}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} '0b10'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n+nb}{format}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsh{}b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{n+nb}{format}\PY{p}{(}\PY{l+m+mi}{14}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} 不太懂 要学习一下format函数}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} ('0b1110', '1110')
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{c+c1}{\PYZsh{} class bool([x]) return a Boolean value, i.e. one of True or False. class部分要学习一下，回头再看这个。}
+        
+        \PY{c+c1}{\PYZsh{}  x is now a positional\PYZhy{}only parameter??? 这个的含义也不懂。}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{c+c1}{\PYZsh{} breakpoint(*args, **kws)  debug function.暂时不懂。}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{c+c1}{\PYZsh{} class bytearray([source[, encoding[, errors]]]) }
+\end{Verbatim}
+
+
+    zip(*iterables)
+
+Returns an iterator of tuples, where the \emph{i}-th tuple contains the
+\emph{i}-th element from each of the argument sequences or iterables. It
+stops when the shortest input iterable is exhausted.
+
+For example, it can do transpose on 2-d matrix:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{matrix} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{]}
+        \PY{n}{matrix}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{matrix}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} [(1, 4, 7, 10), (2, 5, 8, 11), (3, 6, 9, 12)]
+\end{Verbatim}
+            
+    \subsection{\texorpdfstring{Sequence Types -\/- \textbf{list},
+\textbf{tuple},
+\textbf{range}}{Sequence Types -\/- list, tuple, range}}\label{sequence-types----list-tuple-range}
+
+    \subsubsection{Common Sequence
+Operations}\label{common-sequence-operations}
+
+    The operations in the following table are supported by most sequence
+typs, both mutable and immutable.
+
+In this table \textbf{s} and \textbf{t} are sequences of the same type,
+\textbf{n}, \textbf{i}, \textbf{j} and \textbf{k} are integers and
+\textbf{x} is an arbitrary object that meets any type and value
+restrictions imposed by \textbf{s}.
+
+The \textbf{in} and \textbf{not in} have the same priorities as the
+comparison operations. The \textbf{+} (concatenation) and \textbf{*}
+(repetition) have the same priority as the corresponding numeric
+operations.
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+\begin{minipage}[b]{0.14\columnwidth}\raggedright\strut
+Operation\strut
+\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright\strut
+Result\strut
+\end{minipage} & \begin{minipage}[b]{0.14\columnwidth}\raggedright\strut
+Notes\strut
+\end{minipage}\tabularnewline
+\midrule
+\endhead
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+x in s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\textbf{True} if an item of s is equal to x, else \textbf{False}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+x not in s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\textbf{False} if an item of s is euqal to x, else \textbf{False}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+1\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s + t\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+the concatenation of s and t\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+6 7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s * n or n * s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+equivalent to adding s to itself n times\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+2 7\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s{[}i{]}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\emph{i}th item of s, origin 0\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+3\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s{[}i:j{]}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+slice of s from i(inc) to j(exc)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+3 4\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s{[}i:j:k{]}\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+slice of s from i to j with step k\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+3 5\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+len(s)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+length of s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+min(s)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+smallest item of s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+max(s)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+largest item of s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s.index(x{[}, i{[}, j{]}{]})\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+index of the first occurrence of x in s (at or after index i and before
+index j)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+8\strut
+\end{minipage}\tabularnewline
+\begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+s.count(x)\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+total number of occurrences of x in s\strut
+\end{minipage} & \begin{minipage}[t]{0.14\columnwidth}\raggedright\strut
+\strut
+\end{minipage}\tabularnewline
+\bottomrule
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  While the \textbf{in} and \textbf{not in} operations are used only for
+  simple containment testing in the general case, some specialised
+  sequences (such as \textbf{str}, \textbf{bytes}, \textbf{bytearray})
+  also use them for subsequence testing:
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{gg}\PY{l+s+s2}{\PYZdq{}} \PY{o+ow}{in} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{eggs}\PY{l+s+s2}{\PYZdq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} True
+\end{Verbatim}
+            
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Values of \emph{n} less than \textbf{0} are treated as \textbf{0}
+  (which yields an empty sequence of the same type as s). Items in the
+  sequence \textbf{s} are not copied; they are referenced multiple
+  times: \sout{(这个例子不是太理解，后边要继续看append()
+  回头看是不是可以理解这里了。)}
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}Fist of all,we are talking about Sqeuence types here, so the following examle isn\PYZsq{}t part of this topic, it is here only for claritying }
+         \PY{l+s+sd}{It is not the same case when multiply non\PYZhy{}list.\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{c+c1}{\PYZsh{} have to know THIS is wrong to multiply a one\PYZhy{}dimentional list:}
+         \PY{n}{lists4} \PY{o}{=} \PY{p}{[}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{5} \PY{c+c1}{\PYZsh{} This is an empty list, nothing to multiply.}
+         \PY{n}{lists4}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} []
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{c+c1}{\PYZsh{} You have to put something in the [] in order to multiply a one\PYZhy{}dimentional list:}
+         
+         \PY{n}{list5} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{5}
+         \PY{n}{list5}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} [2, 2, 2, 2, 2]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{c+c1}{\PYZsh{} Now try to change some item: }
+         \PY{c+c1}{\PYZsh{} This example is different from the below, integers are multiplied here, not lists. Thus these items are independent from each other.}
+         \PY{c+c1}{\PYZsh{} 不确定这样解释对不对，再看看吧. 这样解释说得通，被此处被复制的是int 2，而不是list；所以互相独立。}
+         \PY{n}{list5}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n}{list5}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}14}]:} [1, 2, 2, 2, 2]
+\end{Verbatim}
+            
+    Now we go back to 2.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{lists} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{5}    \PY{c+c1}{\PYZsh{}注意此处乘号在两层中括号的外侧，所以[None]被复制后集体在外层中括号的内部；\PYZbs{}}
+         \PY{c+c1}{\PYZsh{} 被复制内容集体存在最外层中括号减1的位置。读不懂了看下下下边的有for loop的例子}
+         \PY{n}{lists}
+         \PY{n}{lists}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{lists}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}15}]:} [[None, 2], [None, 2], [None, 2], [None, 2], [None, 2]]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{lists}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+         \PY{n}{lists}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} [[None, 2, 3], [None, 2, 3], [None, 2, 3], [None, 2, 3], [None, 2, 3]]
+\end{Verbatim}
+            
+    What happened is that {[}{[}{]}{]} is a one-element list containing an
+empty list, so all three elements of {[}{[}{]}{]} * 3 are references to
+this single empty list.Modifying any of the elements of lists modifies
+this single list. 就是说用 * 新建的list
+指向同一个引用；更改一个的内容，其他的一同改变。\href{https://docs.python.org/3/faq/programming.html\#faq-multidimensional-list}{check
+this for further explaination}
+
+Use the following method to create a list of different lists this way:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{n}{lists2} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{]}
+         \PY{n}{lists2}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{lists2}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+         \PY{n}{lists2}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{n}{lists2}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}17}]:} [[2], [3], [5]]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{lists3} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{2} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{]}    \PY{c+c1}{\PYZsh{}此处乘号在内外层中括号之间，所以multipy结果如下，此处注意六个None是互相独立的。}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{lists3}\PY{p}{)}
+         \PY{n}{lists3}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n}{lists3}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}
+         \PY{n}{lists3}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+         \PY{n}{lists3} \PY{c+c1}{\PYZsh{} append之后结果如下}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[None, None], [None, None], [None, None]]
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}18}]:} [[None, None, 2], [None, None, 3], [None, None, 5]]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{lists3}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}    \PY{c+c1}{\PYZsh{} 再次证明六个None之间是互相独立的。}
+         \PY{n}{lists3}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} [[1, None, 2], [None, None, 3], [None, None, 5]]
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{list4} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{2}\PY{p}{]} \PY{o}{*} \PY{l+m+mi}{3} \PY{c+c1}{\PYZsh{} 此例子跟上边做对比, 互相之间还是关联的。但上边例子中 for loop之前的乘2并没有关联！！！！！}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{list4}\PY{p}{)}
+         \PY{n}{list4}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{list4}\PY{p}{)}
+         \PY{n}{list4}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{list4}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[[None, None], [None, None], [None, None]]
+[[1, None], [1, None], [1, None]]
+[[1, None, 2], [1, None, 2], [1, None, 2]]
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{c+c1}{\PYZsh{} items are independent from each other, correct way to initialize a two\PYZhy{}dimentional list: (because [None] * w multiplies a single value, not a list.？？？？？)}
+         \PY{n}{w}\PY{p}{,} \PY{n}{h} \PY{o}{=} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}
+         \PY{n}{A} \PY{o}{=} \PY{p}{[}\PY{p}{[}\PY{k+kc}{None}\PY{p}{]} \PY{o}{*} \PY{n}{w} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n}{h}\PY{p}{)}\PY{p}{]}
+         \PY{n}{A}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{1}
+         \PY{n}{A}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:} [[1, None], [None, None], [None, None]]
+\end{Verbatim}
+            
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  If \emph{i} or \emph{j} is negative, the index is relative to the end
+  of sequence s: \textbf{len(s) + i} or \textbf{len(s) + j} is
+  substituted. But note that -0 is still 0.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  \textbf{i} is inclusive, \textbf{j} is exclusive. If \textbf{i} or
+  \textbf{j} is greater than \textbf{len(s)}, use \textbf{len(s)}. If
+  \textbf{i} is omitted or \textbf{None}, use \textbf{0}. If \textbf{j}
+  is omitted or \textbf{None}, use \textbf{len(s)}. If \textbf{i} is
+  greater than or equal to \textbf{j}, the slice is empty.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  s{[}i:j:k{]}, the indices are \textbf{i}, \textbf{i+k}, \textbf{i+2k},
+  and so on, stopping when \textbf{j} is reached (but
+  exclusive).还有解释，不写了，去网上看。。。
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  Concatenating immutable swquences always results in a new object,
+  which means runtime cost is much higher!!! 4 ways to save the runtime.
+  看网站去。
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\item
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\item
+\end{enumerate}
+
+    \subsection{String}\label{string}
+
+    \subsubsection{string basic}\label{string-basic}
+
+    If you don't want characters prefaced by ~to be interpreted as special
+characters, you can use raw strings by adding an r before the first
+quote:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{r}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{C:}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{some}\PY{l+s+s1}{\PYZbs{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}  \PY{c+c1}{\PYZsh{} note the r before the quote}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}some\textbackslash{}name
+
+    \end{Verbatim}
+
+    Two or more string literals (i.e. the ones enclosed between quotes) next
+to each other are automatically concatenated.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Py}\PY{l+s+s1}{\PYZsq{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{thon}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} 'Python'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{text} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Put several strings within parentheses }\PY{l+s+s1}{\PYZsq{}} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{to have them joined together.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{text}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} 'Put several strings within parentheses to have them joined together.'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n+nb}{type}\PY{p}{(}\PY{n}{text}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}25}]:} str
+\end{Verbatim}
+            
+    Python strings cannot be changed --- they are immutable.
+
+    \subsubsection{String method}\label{string-method}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{c+c1}{\PYZsh{} str.strip([char])}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}The OUTERMOST leading and trailing chars argument values are stripped from the string. \PYZbs{}}
+         \PY{l+s+sd}{Unil reaching a string character that is not contained in the set of char, [char].\PYZbs{}}
+         \PY{l+s+sd}{The chars argument is not a prefix or suffix; rather, every single character \PYZbs{}}
+         \PY{l+s+sd}{in it is stripped. The default value is white\PYZhy{}space.\PYZbs{}}
+         \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+         \PY{c+c1}{\PYZsh{} example:}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:} 'The OUTERMOST leading and trailing chars argument values are stripped from the string. Unil reaching a string character that is not contained in the set of char, [char].The chars argument is not a prefix or suffix; rather, every single character in it is stripped. The default value is white-space.'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{     spacious     }\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:} 'spacious'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{www.example.com}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{comwa}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} pay attention here, a is not stripped, since it is in the inner side.}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} '.example.'
+\end{Verbatim}
+            
+    \subsection{Lists}\label{lists}
+
+    Lists are mutable, able to contain different types of item.
+
+    Nest lists:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{a}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{b}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{c}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{b} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{]}
+         \PY{n}{x} \PY{o}{=} \PY{p}{[}\PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{]}
+         \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:} ['a', 'b', 'c']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{x}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} 'b'
+\end{Verbatim}
+            
+    生成连续数列：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{9}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}31}]:} [3, 4, 5, 6, 7, 8]
+\end{Verbatim}
+            
+    \subsection{Control Flow Tools}\label{control-flow-tools}
+
+    \subsubsection{if-elif-elif-else}\label{if-elif-elif-else}
+
+    \subsubsection{For Loops}\label{for-loops}
+
+    \begin{itemize}
+\tightlist
+\item
+  Python's for statement iterates over the items of any sequence (a list
+  or a string), in the order that they appear in the sequence.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{words} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{window}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{defenestrate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{words}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{w}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{w}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+cat 3
+window 6
+defenestrate 12
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  If you need to modify the sequence you are iterating over while inside
+  the loop (for example to duplicate selected items), it is recommended
+  that you first make a copy. Iterating over a sequence does not
+  implicitly make a copy. The slice notation makes this especially
+  convenient:
+  作为循环判断条件的list：words在循环过程中被改变了，所以使用words{[}:{]}的方式在循环开始时复制一个words，
+  以此初始状态完成循环，循环过程中对words所做修改不再影响for循环的判定。也可以使用words.copy()
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n}{words} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{window}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{defenestrate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{words}\PY{p}{[}\PY{p}{:}\PY{p}{]}\PY{p}{:}    \PY{c+c1}{\PYZsh{}此处用的words[:]}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{6}\PY{p}{:}
+                 \PY{n}{words}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{w}\PY{p}{)} \PY{c+c1}{\PYZsh{} insert w to the 0 position in words}
+         \PY{n}{words}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} ['defenestrate', 'cat', 'window', 'defenestrate']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{words} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cat}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{window}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{defenestrate}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{k}{for} \PY{n}{w} \PY{o+ow}{in} \PY{n}{words}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{:}    \PY{n}{此处用的words}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}
+             \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n}{w}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{l+m+mi}{6}\PY{p}{:}
+                 \PY{n}{words}\PY{o}{.}\PY{n}{insert}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{w}\PY{p}{)} \PY{c+c1}{\PYZsh{} insert w to the 0 position in words}
+         \PY{n}{words}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+          File "<ipython-input-34-804612cdad38>", line 3
+        if len(w) > 6:
+        \^{}
+    IndentationError: unexpected indent
+
+
+    \end{Verbatim}
+
+    \subsubsection{range() function}\label{range-function}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{20}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{break and continue Statements, and else Clauses on
+Loops}\label{break-and-continue-statements-and-else-clauses-on-loops}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  break, breaks out of the innermost enclosing \emph{for} or
+  \emph{while} loop
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  else clause: is executed when the loop terminates through exhaustion
+  of the list (with \emph{for} loop) or when the condition becomes false
+  (with \emph{while} loop), but not when the loop is terminated by a
+  \emph{break} statement，下面举一个找质数（prime number）的例子：
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{m} \PY{o}{=} \PY{l+m+mi}{10} \PY{c+c1}{\PYZsh{} searching for all the prime numbers from zero to m.}
+        \PY{k}{for} \PY{n}{n} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{m}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{n is }\PY{l+s+si}{\PYZob{}n\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{n}\PY{p}{)}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x is }\PY{l+s+si}{\PYZob{}x\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{k}{if} \PY{n}{n} \PY{o}{\PYZpc{}} \PY{n}{x} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                    \PY{n+nb}{print}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{equals}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{x}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{n}\PY{o}{/}\PY{o}{/}\PY{n}{x}\PY{p}{)}
+                    \PY{k}{break}
+            \PY{k}{else}\PY{p}{:}
+                \PY{c+c1}{\PYZsh{} loop fell through without finding a factor}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{n}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{is a prime number.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}\PYZbs{}}
+        \PY{l+s+sd}{In the above example, line3 and line7 are a pair }
+        \PY{l+s+sd}{(if for loop start from line3 finishes without a break,}
+        \PY{l+s+sd}{the else clause will be executed).}
+        
+        \PY{l+s+sd}{注意n等于2时，x in range(2, 2)循环直接结束，进入else，2直接判定为质数。\PYZbs{}}
+        \PY{l+s+sd}{\PYZsq{}\PYZsq{}\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  The \emph{continue} statement, contnues with the next iteration of the
+  loop.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{m} \PY{o}{=} \PY{l+m+mi}{10}
+        \PY{k}{for} \PY{n}{num} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{n}{m}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n}{num} \PY{o}{\PYZpc{}} \PY{l+m+mi}{2} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Found an even number}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+                \PY{k}{continue}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Found an odd number}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{num}\PY{p}{)}
+                      
+\end{Verbatim}
+
+
+    \subsubsection{pass Statements}\label{pass-statements}
+
+    pass does nothing. It can be used when a statement is required
+syntactically but the program requires no action:
+定义了函数，loop等，内部需要有代码，否则会报错。又啥都不想写的时候，直接一个pass搞定。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{while} \PY{k+kc}{True}\PY{p}{:}
+            \PY{k}{pass} \PY{c+c1}{\PYZsh{} Busy\PYZhy{}wait for keyboard interrupt}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{class} \PY{n+nc}{MyEnptyClass}\PY{p}{:}
+            \PY{k}{pass}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{initlog}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{:}
+            \PY{k}{pass} \PY{c+c1}{\PYZsh{} Remember to implement this!}
+\end{Verbatim}
+
+
+    \subsubsection{Defining Functions}\label{defining-functions}
+
+    \paragraph{Function return:}\label{function-return}
+
+\begin{itemize}
+\tightlist
+\item
+  return without an expression argument returns \textbf{None}
+\item
+  Falling off the end of a function also returns \textbf{None}
+\end{itemize}
+
+    \subsubsection{More on Defining
+Functions}\label{more-on-defining-functions}
+
+    \paragraph{Default Argument Values:}\label{default-argument-values}
+
+\begin{itemize}
+\tightlist
+\item
+  Specifying a default value for an argument, makes the argument
+  \textbf{optional} when calling the function.
+\item
+  The default value is only evaluated once, when the function is
+  defined. But, if the optional argument is a mutable object, and the
+  function is called multiple times without specifying this argument,
+  this value could be accumulated in the following example:
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{f}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{L}\PY{o}{=}\PY{p}{[}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n}{L}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+            \PY{k}{return} \PY{n}{L}
+        
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{Keyword Arguments}\label{keyword-arguments}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Passing arguments to a function, can use \textbf{positional} or
+  \textbf{keyword} arguments. More detailed are in
+  \href{docs.python.org/3/tutorial/controlflow.html}{Python Docs}
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Two more options of passing arguments (these are \textbf{arbitrary
+  number} of arguments):
+
+  \begin{itemize}
+  \tightlist
+  \item
+    *name: It recieves a tuple containing the \textbf{positional}
+    arguments beyond the formal parameter list.
+  \item
+    **name: It recevices a dictionary containing all \textbf{keyword}
+    arguments except for those corresponding to a formal parameter.
+  \item
+    *name should always be before **name arguments
+  \end{itemize}
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{cheeseshop}\PY{p}{(}\PY{n}{kind}\PY{p}{,} \PY{o}{*}\PY{n}{arguments}\PY{p}{,} \PY{o}{*}\PY{o}{*}\PY{n}{keywords}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{} Do you have any}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{kind}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{?}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZhy{}\PYZhy{} I}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{m sorry, we}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{re all out of }\PY{l+s+si}{\PYZob{}kind\PYZcb{}}\PY{l+s+s2}{.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+            \PY{k}{for} \PY{n}{arg} \PY{o+ow}{in} \PY{n}{arguments}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{arg}\PY{p}{)}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}} \PY{o}{*} \PY{l+m+mi}{40}\PY{p}{)}
+            \PY{k}{for} \PY{n}{key} \PY{o+ow}{in} \PY{n}{keywords}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{key}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{keywords}\PY{p}{[}\PY{n}{key}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    The above could be called like this:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{cheeseshop}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Limburger}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{It}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s very runny, sir.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{It}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{s really very, VERY runny, sir.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{n}{shopkeeper}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Michael Palin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{n}{client}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{John Cleese}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}
+                  \PY{n}{sketch}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Cheese Shop Sketch}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{Unpacking Argument Lists}\label{unpacking-argument-lists}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} Normal call with separate arguments}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{args} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{]}
+        \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{o}{*}\PY{n}{args}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} call with arguments unpacked from a list}
+\end{Verbatim}
+
+
+    \paragraph{Lambda Expressions}\label{lambda-expressions}
+
+    Small anonymous functions can be created with the \textbf{lambda}
+keyword.这个例子仔细看，make\_incrementor是个关于n的函数，f是个关于x的函数。
+
+接受lambda function为参数的变量，作为lambdafunction的变量。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{def} \PY{n+nf}{make\PYZus{}incrementor}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{k}{return} \PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x} \PY{o}{+} \PY{n}{n}
+        
+        \PY{n}{f} \PY{o}{=} \PY{n}{make\PYZus{}incrementor}\PY{p}{(}\PY{l+m+mi}{42}\PY{p}{)}
+        \PY{n}{f}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    Another use is to pass a small function as an argument.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{one}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{two}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{three}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{four}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+        \PY{n}{pairs}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{pair}\PY{p}{:} \PY{n}{pair}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}    \PY{c+c1}{\PYZsh{}按里层list第二个元素排序 也就是 按照one two three four的首字母排序 }
+        \PY{c+c1}{\PYZsh{} 下边list.sort()有进一步解释}
+        \PY{n}{pairs}
+\end{Verbatim}
+
+
+    \paragraph{Function Annotations}\label{function-annotations}
+
+    暂时用不到，用来说明自定义函数的参数类型，方便阅读代码的。
+
+    \subsubsection{Coding Style}\label{coding-style}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use 4-space indentation, and no \textbf{tabs}.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Wrap lines so that they don't exceed 79 characters.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Use blank lines to serarate functions and classes, and larger blocks
+  of code inside functions.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  When possible, put comments on a line of their own.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  Use docstrings. ?????
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\item
+  Use spaces around operators and after commas, but not directly inside
+  bracketing constructs: (此处不太懂具体说的什么意思。)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    a = f(1, 3) + g(3, 4)
+  \end{itemize}
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\tightlist
+\item
+  Name your classes and functions consistently; the convention is to use
+  \textbf{CamelCase} (每个单词首字母大写，单词间不空格) for classes and
+  \textbf{lower\_case\_with\_underscores}（全部小写，单词间用下划线分隔）
+  for functions and methods.
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  Encodings: Python's default is UTF-8, or even plain ASCII works best
+  in any case.
+\end{enumerate}
+
+    \subsection{Data Structures}\label{data-structures}
+
+    \subsubsection{methods of list type}\label{methods-of-list-type}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  list.append(x)
+\end{enumerate}
+
+Add an item to the end of the list. Equivalent to a{[}len(a):{]} =
+{[}x{]} \# 此处x可以是含有多项的list，但此list被append时
+是作为一个整体被加入的。
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  list.extend(iterable)
+\end{enumerate}
+
+Add an item to the end of the list. Equivalent to a{[}len(a):{]} =
+{[}iterable{]}
+
+此处注意 iterable
+需要是一个list，或者其他类型，暂时还不知道别的什么可以的，以后看到了再加上哦。
+
+    以上append 跟 extend 的区别在于
+append的参数作为一个整体被加到list的最后；extend的参数必须是iterable的（看下边例子
+出错的这个），拆分开分别加进list。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{list\PYZus{}a} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{list\PYZus{}a}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}
+        \PY{n}{list\PYZus{}a}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{list\PYZus{}c} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{list\PYZus{}c}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{list\PYZus{}c}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{list\PYZus{}b} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{list\PYZus{}b}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}\PY{p}{)}
+        \PY{n}{list\PYZus{}b}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{list\PYZus{}d} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{list\PYZus{}d}\PY{o}{.}\PY{n}{extend}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 此处故意写出错误代码 以示区别}
+        \PY{n}{list\PYZus{}d}
+\end{Verbatim}
+
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  list.insert(i, x)
+\end{enumerate}
+
+Insert an item at a given position. * i is the index of the element
+before which to insert, so \textbf{a.insert(0, x)} inserts at the front
+of the list. * \textbf{a.insert(len(a), x)} is equivalent to
+\textbf{a.append(x)}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  list.remove(x)
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Remove the first item from the list whose value is equal to x.
+  \item
+    It raises a \textbf{ValueError} if there is no such item.
+  \end{itemize}
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  list.pop({[}i{]})
+\end{enumerate}
+
+{[}{]}代表可选参数，参数默认值为-1.
+
+Remove the item at the given position in the list, and return it. If no
+index is specified, it removes and returns the last item in the list.
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  list.clear()
+\end{enumerate}
+
+Remove all items from the list. Equivalent to \textbf{del list{[}:{]}}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{6}
+\item
+  list.index(x{[}, start{[}, end{]}{]})
+
+  \begin{itemize}
+  \item
+    Return zero-based index in the list of the first item whose value is
+    equal to x. Raises a \textbf{ValueError} if there is no such item.
+  \item
+    The optional arguments are the slice notation. The returned index is
+    still computed relative to the beginning of the full list.
+  \end{itemize}
+\end{enumerate}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\tightlist
+\item
+  list.count(x)
+\end{enumerate}
+
+Return the number of times x appears in the list.
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{8}
+\tightlist
+\item
+  list.sort(key=None, reverse=False)
+\end{enumerate}
+
+Sort the items of the list in place. key specifies a function of one
+argument that is used to extract a comparison key from each list element
+(key 必须是个function（lambda function）？？？)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{one}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{two}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{three}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{four}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+        \PY{n}{pairs}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{k}{lambda} \PY{n}{pair}\PY{p}{:} \PY{n}{pair}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}    \PY{c+c1}{\PYZsh{}按 里层 list第二个元素排序 也就是 按照one two three four的首字母排序}
+        \PY{n}{pairs}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{pairs} \PY{o}{=} \PY{p}{[}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{one}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{two}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{three}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{4}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{four}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{]}
+        \PY{n}{pairs}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{n}{key}\PY{o}{=}\PY{n}{pairs}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}    \PY{c+c1}{\PYZsh{}此处故意把key改成非lambda函数，以示区别。}
+\end{Verbatim}
+
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{9}
+\tightlist
+\item
+  list.reverse()
+\end{enumerate}
+
+Reverse the elements of the list in place.
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{10}
+\tightlist
+\item
+  list.copy()
+\end{enumerate}
+
+Return a shallow copy of the list. Equivalent to \textbf{a{[}:{]}}.
+
+    Examples that uses most of the list methods:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orrange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{kiwi}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{fruits}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tangerine}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}  \PY{c+c1}{\PYZsh{} Find next banana starting at position 4}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{reverse}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{grape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{sort}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{fruits}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \paragraph{Using Lists as Stacks}\label{using-lists-as-stacks}
+
+    \begin{itemize}
+\tightlist
+\item
+  The list methods make it very easy to use a list as a stack, where the
+  last element added is the first element retrieved (last-in,
+  first-out).
+\item
+  To add an item to the top of the stack, use \textbf{append()}. To
+  retrieve an item from the top of the stack, use \textbf{pop()} without
+  an explicit index. For example:
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{]}
+        \PY{n}{stack}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}
+        \PY{n}{stack}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}
+        \PY{n}{stack}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}\PY{o}{.}\PY{n}{pop}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{stack}
+\end{Verbatim}
+
+
+    \paragraph{Using Lists as Queues}\label{using-lists-as-queues}
+
+    As queues, the first element added is the first element retrieved
+(first-in, first-out); however, \textbf{lists are not efficient for this
+purpose}.Because all of the other elements have to be shifted by one.To
+implement a queue, use a \textbf{collections.deque} which was designed
+to have fast appends and pops from both ends. For example:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{from} \PY{n+nn}{collections} \PY{k}{import} \PY{n}{deque}
+        \PY{n}{queue} \PY{o}{=} \PY{n}{deque}\PY{p}{(}\PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Eric}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{John}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Michael}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{queue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Terry}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{queue}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Graham}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{queue}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{queue}\PY{o}{.}\PY{n}{popleft}\PY{p}{(}\PY{p}{)}    \PY{c+c1}{\PYZsh{} no popright() function}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{queue}\PY{o}{.}\PY{n}{popleft}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{queue}
+\end{Verbatim}
+
+
+    \paragraph{List Comprehensions}\label{list-comprehensions}
+
+    List comprehensions provide a concise way to create lists. Example:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{squares} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{:}
+            \PY{n}{squares}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{)}
+        \PY{n}{squares}
+\end{Verbatim}
+
+
+    下面是更简单的两种办法，算同样的squares
+
+    map(func, squence) function: 返回在squence上使用func函数得到的结果。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{squares} \PY{o}{=} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{map}\PY{p}{(}\PY{k}{lambda} \PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2}\PY{p}{,} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+        \PY{n}{squares}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{squares} \PY{o}{=} \PY{p}{[}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{)}\PY{p}{]} \PY{c+c1}{\PYZsh{}this is more concise and readable}
+        \PY{n}{squares}
+\end{Verbatim}
+
+
+    A list comprehension consists of brackets containing an expression
+followed by a \emph{for} clause, then zero or more \emph{for} or
+\emph{if} clauses. The result will be a new list resulting form
+evluating the expression in the context of the \emph{for} and \emph{if}
+clauses which follow it. Example:
+
+Combines the elements of two lists if they are not equal.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{p}{[}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]} \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]} \PY{k}{if} \PY{n}{x} \PY{o}{!=} \PY{n}{y}\PY{p}{]}
+\end{Verbatim}
+
+
+    The above is equavelent to:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{combs} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{3}\PY{p}{]}\PY{p}{:}
+            \PY{k}{for} \PY{n}{y} \PY{o+ow}{in} \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{l+m+mi}{2}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{,}\PY{l+m+mi}{5}\PY{p}{]}\PY{p}{:}
+                \PY{k}{if} \PY{n}{x} \PY{o}{!=} \PY{n}{y}\PY{p}{:}
+                    \PY{n}{combs}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{)}\PY{p}{)}
+        \PY{n}{combs}
+\end{Verbatim}
+
+
+    If the expression is a tuple, it must be parenthesized:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{vec} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{4}\PY{p}{,} \PY{o}{\PYZhy{}}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}
+        \PY{p}{[}\PY{n}{x}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec}\PY{p}{]}
+\end{Verbatim}
+
+
+    filter the list with an \emph{if} clause:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{p}{[}\PY{n}{x} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec} \PY{k}{if} \PY{n}{x} \PY{o}{\PYZgt{}}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    apply a function to all elements:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{p}{[}\PY{n+nb}{abs}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n}{vec}\PY{p}{]}
+\end{Verbatim}
+
+
+    call a method on each element:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{freshfruit} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{   banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{   loganberry  }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{passion fruit  }\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{p}{[}\PY{n}{weapon}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)} \PY{k}{for} \PY{n}{weapon} \PY{o+ow}{in} \PY{n}{freshfruit}\PY{p}{]}
+\end{Verbatim}
+
+
+    List comprehensions can contain complex expressions and nested
+functions:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k+kn}{from} \PY{n+nn}{math} \PY{k}{import} \PY{n}{pi}
+        \PY{p}{[}\PY{n+nb}{str}\PY{p}{(}\PY{n+nb}{round}\PY{p}{(}\PY{n}{pi}\PY{p}{,} \PY{n}{i}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    \paragraph{Nested List Comprehensions}\label{nested-list-comprehensions}
+
+    The initial expression in a list comprehension can be any arbitrary
+expression, including another list comprehension.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{matrix} \PY{o}{=} \PY{p}{[}
+            \PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{l+m+mi}{5}\PY{p}{,} \PY{l+m+mi}{6}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{,} \PY{l+m+mi}{8}\PY{p}{]}\PY{p}{,}
+            \PY{p}{[}\PY{l+m+mi}{9}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{,} \PY{l+m+mi}{12}\PY{p}{]}\PY{p}{,}
+        \PY{p}{]}
+        \PY{n}{matrix}
+\end{Verbatim}
+
+
+    The following list comprehension will transpose rows and columns,
+easiest way to do transpose is by the built-in function zip(), shown
+below:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{p}{[}\PY{p}{[}\PY{n}{row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{matrix}\PY{p}{]} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+    The above example is equal to:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{transposed} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{:}
+            \PY{n}{transposed}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{[}\PY{n}{row}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{k}{for} \PY{n}{row} \PY{o+ow}{in} \PY{n}{matrix}\PY{p}{]}\PY{p}{)}
+        \PY{n}{transposed}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{list}\PY{p}{(}\PY{n+nb}{zip}\PY{p}{(}\PY{o}{*}\PY{n}{matrix}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{The del statement}\label{the-del-statement}
+
+    It is used to remove an item from a list given its index instead of its
+value.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{=} \PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{653}\PY{p}{,} \PY{l+m+mi}{435}\PY{p}{,} \PY{l+m+mf}{234.23}\PY{p}{,} \PY{l+m+mi}{99}\PY{p}{]}
+        \PY{k}{del} \PY{n}{a}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+        \PY{n}{a}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{del} \PY{n}{a}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{2}\PY{p}{]}
+        \PY{n}{a}
+\end{Verbatim}
+
+
+    It can also be used to delete the entire variable:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{k}{del} \PY{n}{a} 
+        \PY{n}{a}    \PY{c+c1}{\PYZsh{} Referencing the name hereafter will show an error.}
+\end{Verbatim}
+
+
+    \subsubsection{Tuples and Sequences}\label{tuples-and-sequences}
+
+    \paragraph{Tuple Basics}\label{tuple-basics}
+
+    This is an example of tuple packing: (we'll see unpacking later)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{t} \PY{o}{=} \PY{l+m+mi}{12345}\PY{p}{,} \PY{l+m+mi}{54321}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hello}\PY{l+s+s1}{\PYZsq{}}
+        \PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{t}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{u} \PY{o}{=} \PY{n}{t}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}
+        \PY{n}{u}
+\end{Verbatim}
+
+
+    Tuples are immutable!!!!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{t}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{88888}
+\end{Verbatim}
+
+
+    Special consideration for constructing tuples containing 0 or 1 items:
+
+\begin{verbatim}
+* Empty tuples are constructed by an empty pair of parentheses
+
+* Tuples with 1 item is contructed by following a value with a comma (it is not sufficient to enclose a single value in parentheses). For example:
+\end{verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{empty} \PY{o}{=} \PY{p}{(}\PY{p}{)}
+        \PY{n}{singleton} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hello}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+        \PY{n+nb}{len}\PY{p}{(}\PY{n}{empty}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n+nb}{len}\PY{p}{(}\PY{n}{singleton}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{singleton}
+\end{Verbatim}
+
+
+    tuple unpacking:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{n}{z}\PY{p}{,} \PY{o}{=} \PY{n}{t}
+        \PY{n}{x}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{y}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{z}
+\end{Verbatim}
+
+
+    \subsubsection{Sets}\label{sets}
+
+    A set is an \textbf{unordered} collection with \textbf{no duplicate}
+elements.
+
+Basic uses: * membership testing ??????? * eliminating duplicate entries
+
+Also support mathematical operations like: * union * intersection *
+difference * symmetric difference ?????
+
+How to create sets: * Curly braces \{\} (not for enpty sets, this will
+create an empty dictionary) * set() function (have to use this to create
+empty sets) * The above two ways are not exactly the same, see the below
+demo.
+
+here's a brief demonstration:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{basket} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+        \PY{n+nb}{print}\PY{p}{(}\PY{n}{basket}\PY{p}{)} \PY{c+c1}{\PYZsh{} duplicates have been removed}
+        \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{basket} \PY{c+c1}{\PYZsh{} fast membership testing}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{crabgrass}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{basket}
+\end{Verbatim}
+
+
+    set operations on unique letters from two words
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abracadabra}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} use \PYZob{}\PYZcb{} if you want to create a set == \PYZsq{}abracadabra\PYZsq{}}
+        \PY{n}{b} \PY{o}{=} \PY{n+nb}{set}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{alacazam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{a}    \PY{c+c1}{\PYZsh{} unique letters in a}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{aa} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{abracadabra}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}} \PY{c+c1}{\PYZsh{} same string, different sets as the above}
+        \PY{n}{aa}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{\PYZhy{}} \PY{n}{b}    \PY{c+c1}{\PYZsh{} letters in a but not in b}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{|} \PY{n}{b}    \PY{c+c1}{\PYZsh{} letters in a or b}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{\PYZam{}} \PY{n}{b}    \PY{c+c1}{\PYZsh{} letters in a and b}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{a} \PY{o}{\PYZca{}} \PY{n}{b}    \PY{c+c1}{\PYZsh{} letters in a or b but not both}
+\end{Verbatim}
+
+
+    \subsubsection{Dictionaries}\label{dictionaries}
+
+    Unlike sequences, which are indexed by a range of numbers, dictionaries
+are indexed by \emph{keys}, which can be any immutable type: * strings
+and numbers can always be \emph{keys}. * \emph{Tuples} can be used as
+keys if they contain only strings, numbers, or tuples; * \emph{tuples}
+contains any mutable object either directly or indirectly, it cannot be
+used as a key. * lists can not be used as keys.
+
+It is best to think of a dictionary as a set of \emph{key: value} pairs,
+with the requirement that the key are unique.
+
+use \emph{del} to remove a key:value pair in a dictionary
+
+create umpty dictionary: use \{\}
+
+\begin{verbatim}
+    * Performing list(dict) on a dictionary returns a list of all the keys used in the dict, in insertion order (插入顺序，dict的创建顺序). If you need it sorted, just use sorted(dict). 
+    * To check whether a single key is in the dictionary, use the in keyword.
+\end{verbatim}
+
+Here is an example:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{tel} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4098}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4139}\PY{p}{\PYZcb{}}
+         \PY{n}{tel}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{guido}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{4127}
+         \PY{n}{tel}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}35}]:} \{'jack': 4098, 'sape': 4139, 'guido': 4127\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{k}{del} \PY{n}{tel}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         \PY{n}{tel}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{irv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{l+m+mi}{4127}
+         \PY{n}{tel}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}36}]:} \{'jack': 4098, 'guido': 4127, 'irv': 4127\}
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n+nb}{sorted}\PY{p}{(}\PY{n}{tel}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}37}]:} ['guido', 'irv', 'jack']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{guido}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{tel}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}38}]:} True
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{not} \PY{o+ow}{in} \PY{n}{tel}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:} False
+\end{Verbatim}
+            
+    \paragraph{dict() function construct builds dictionaries directly from
+sequences of key-value
+pairs:}\label{dict-function-construct-builds-dictionaries-directly-from-sequences-of-key-value-pairs}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{n+nb}{dict}\PY{p}{(}\PY{p}{[}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{sape}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4139}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{guido}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4127}\PY{p}{)}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{4098}\PY{p}{)}\PY{p}{]}\PY{p}{)}    \PY{c+c1}{\PYZsh{} the pairs not necessarilly have to have a \PYZsq{}:\PYZsq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}40}]:} \{'sape': 4139, 'guido': 4127, 'jack': 4098\}
+\end{Verbatim}
+            
+    When the keys are simple strings, it is sometimes easier to specify
+pairs using keyword arguments:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n+nb}{dict}\PY{p}{(}\PY{n}{sape}\PY{o}{=}\PY{l+m+mi}{4139}\PY{p}{,} \PY{n}{guido}\PY{o}{=}\PY{l+m+mi}{4127}\PY{p}{,} \PY{n}{jack}\PY{o}{=}\PY{l+m+mi}{4098}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}42}]:} \{'sape': 4139, 'guido': 4127, 'jack': 4098\}
+\end{Verbatim}
+            
+    \paragraph{dict comprehensions can be used to create dictionaries from
+arbitrary key and value
+expresssions:}\label{dict-comprehensions-can-be-used-to-create-dictionaries-from-arbitrary-key-and-value-expresssions}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{p}{\PYZob{}}\PY{n}{x}\PY{p}{:} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{2} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{p}{(}\PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{,} \PY{l+m+mi}{5}\PY{p}{)}\PY{p}{\PYZcb{}}        \PY{c+c1}{\PYZsh{} 这里需要冒号，冒号前是key，冒号后是value。跟前边list是类似的。}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}41}]:} \{2: 4, 3: 9, 4: 16, 5: 25\}
+\end{Verbatim}
+            
+    \subsubsection{Looping Techniques}\label{looping-techniques}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  When looping through dictionaries, the key and corresponding value can
+  be retrieved at the same time using the items() method.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n}{knights} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gallahad}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the pure}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{robin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the brave}\PY{l+s+s1}{\PYZsq{}}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{k}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n}{knights}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}k\PYZcb{}}\PY{l+s+s1}{: }\PY{l+s+si}{\PYZob{}v\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+gallahad: the pure
+robin: the brave
+
+    \end{Verbatim}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  When looping through a sequence, the position index and corresponding
+  value can be retrived at the same time using the enumerate() function.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{v} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tic}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{tac}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{toe}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{,} \PY{n}{v}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0 tic
+1 tac
+2 toe
+
+    \end{Verbatim}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  To loop over two or more sequences at the same time, the entries can
+  be paired with the zip() function.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{questions} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{quest}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{favorite color}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{n}{answers} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lancelot}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the holy grail}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{blue}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{q}\PY{p}{,} \PY{n}{a} \PY{o+ow}{in} \PY{n+nb}{zip}\PY{p}{(}\PY{n}{questions}\PY{p}{,} \PY{n}{answers}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{What is your }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{? It is }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{q}\PY{p}{,} \PY{n}{a}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+What is your name? It is lancelot.
+What is your quest? It is the holy grail.
+What is your favorite color? It is blue.
+
+    \end{Verbatim}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  To loop over a sequence in reverse, first specify in a forword
+  direction and then call the reversed() function.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{reversed}\PY{p}{(}\PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{10}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{i}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+9
+7
+5
+3
+1
+
+    \end{Verbatim}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  To loop over a sequence in sorted order, use the sorted() function
+  which returns a new sorted list while leaving the source unaltered.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{basket} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{apple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{pear}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{orange}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{banana}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+        \PY{k}{for} \PY{n}{f} \PY{o+ow}{in} \PY{n+nb}{sorted}\PY{p}{(}\PY{n+nb}{set}\PY{p}{(}\PY{n}{basket}\PY{p}{)}\PY{p}{)}\PY{p}{:}    \PY{c+c1}{\PYZsh{} duplicate items are omitted.}
+            \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+apple
+banana
+orange
+pear
+
+    \end{Verbatim}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{5}
+\tightlist
+\item
+  It is sometimes tempting to change a list while you are looping over
+  it; however, it is often simpler and safer to create a new list
+  instead.
+\end{enumerate}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{n}{raw\PYZus{}data} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{56.2}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NaN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{51.7}\PY{p}{,} \PY{l+m+mf}{55.3}\PY{p}{,} \PY{l+m+mf}{52.5}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NaN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{47.8}\PY{p}{]}
+        \PY{n}{filtered\PYZus{}data} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+        \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{raw\PYZus{}data}\PY{p}{:}
+            \PY{k}{if} \PY{o+ow}{not} \PY{n}{math}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{value}\PY{p}{)}\PY{p}{:}
+                \PY{n}{filtered\PYZus{}data}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+                
+        \PY{n}{filtered\PYZus{}data}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} [56.2, 51.7, 55.3, 52.5, 47.8]
+\end{Verbatim}
+            
+    尝试写一写更简单的代码达到上边的目的：
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+        \PY{n}{raw\PYZus{}data} \PY{o}{=} \PY{p}{[}\PY{l+m+mf}{56.2}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NaN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{51.7}\PY{p}{,} \PY{l+m+mf}{55.3}\PY{p}{,} \PY{l+m+mf}{52.5}\PY{p}{,} \PY{n+nb}{float}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{NaN}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{,} \PY{l+m+mf}{47.8}\PY{p}{]}
+        \PY{p}{[}\PY{n}{value} \PY{k}{for} \PY{n}{value} \PY{o+ow}{in} \PY{n}{raw\PYZus{}data} \PY{k}{if} \PY{o+ow}{not} \PY{n}{math}\PY{o}{.}\PY{n}{isnan}\PY{p}{(}\PY{n}{value}\PY{p}{)}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} [56.2, 51.7, 55.3, 52.5, 47.8]
+\end{Verbatim}
+            
+    \subsubsection{More on conditions}\label{more-on-conditions}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The conditions used in \emph{while} and \emph{if} statements can
+  contain any operators, not just comparisons.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    comparison operators \emph{in} and \emph{not in} check whether a
+    value occurs in a sequence.
+  \item
+    comparison operators \emph{is} and \emph{is not} compare whether two
+    objects are really the same object; this only matters for mutable
+    objects like lists.
+  \end{itemize}
+\end{enumerate}
+
+    \subsection{Modules}\label{modules}
+
+    Module is basically a file contains functions and definitions. It can be
+imported to other modules or the main module to be used. The file name
+is the module name.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} Fibonacci numbers module}
+        
+        \PY{k}{def} \PY{n+nf}{fib}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}    \PY{c+c1}{\PYZsh{} Write Fibonacci series up to n}
+            \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}
+            \PY{k}{while} \PY{n}{a} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{p}{:}
+                \PY{n+nb}{print}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{b}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}
+            \PY{n+nb}{print}\PY{p}{(}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{fib2}\PY{p}{(}\PY{n}{n}\PY{p}{)}\PY{p}{:}    \PY{c+c1}{\PYZsh{} return Fibonacci series up to \PYZsh{} n}
+            \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{1}
+            \PY{n}{result} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{while} \PY{n}{a} \PY{o}{\PYZlt{}} \PY{n}{n}\PY{p}{:}
+                \PY{n}{result}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                \PY{n}{a}\PY{p}{,} \PY{n}{b} \PY{o}{=} \PY{n}{b}\PY{p}{,} \PY{n}{a}\PY{o}{+}\PY{n}{b}
+            \PY{k}{return} \PY{n}{result}
+\end{Verbatim}
+
+
+    Way to import a module:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{k+kn}{import} \PY{n+nn}{fibo}    \PY{c+c1}{\PYZsh{} the module name will be available in the symbol table.}
+\end{Verbatim}
+
+
+    Way to use a function from an imported module
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{fibo}\PY{o}{.}\PY{n}{fib}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 
+
+    \end{Verbatim}
+
+    The module name can be accessed in the following way:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{n}{fibo}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}12}]:} 'fibo'
+\end{Verbatim}
+            
+    import functinos from a module directly: so no need to write the module
+name when calling the function.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{k+kn}{from} \PY{n+nn}{fibo} \PY{k}{import} \PY{n}{fib}\PY{p}{,} \PY{n}{fib2}    \PY{c+c1}{\PYZsh{} here fib, fib2 are functions, we\PYZsq{}ll talk about packages and modules later.}
+         \PY{n}{fib2}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}13}]:} [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+\end{Verbatim}
+            
+    Import all functions from a module:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{k+kn}{from} \PY{n+nn}{fibo} \PY{k}{import} \PY{o}{*}
+\end{Verbatim}
+
+
+    import a module and change its name:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{k+kn}{import} \PY{n+nn}{fibo} \PY{k}{as} \PY{n+nn}{fib}
+         \PY{n}{fib}\PY{o}{.}\PY{n}{fib2}\PY{p}{(}\PY{l+m+mi}{100}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+\end{Verbatim}
+            
+    import a functino and change its name:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k+kn}{from} \PY{n+nn}{fibo} \PY{k}{import} \PY{n}{fib} \PY{k}{as} \PY{n}{fibonacci}
+         \PY{n}{fibonacci}\PY{p}{(}\PY{l+m+mi}{200}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 
+
+    \end{Verbatim}
+
+    \paragraph{Executing modules as
+scripts}\label{executing-modules-as-scripts}
+
+    Add the following lines at the end of the module file:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{k}{if} \PY{n+nv+vm}{\PYZus{}\PYZus{}name\PYZus{}\PYZus{}} \PY{o}{==} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZus{}\PYZus{}main\PYZus{}\PYZus{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{:}
+             \PY{k+kn}{import} \PY{n+nn}{sys}
+             \PY{n}{fib}\PY{p}{(}\PY{n+nb}{int}\PY{p}{(}\PY{n}{sys}\PY{o}{.}\PY{n}{argv}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+          File "<ipython-input-18-c20df94c9865>", line 3
+        fib(int(sys.argv[1])
+                            \^{}
+    SyntaxError: unexpected EOF while parsing
+
+
+    \end{Verbatim}
+
+    This module can be used as a scirpt (in the method shown below) as well
+as an importable module.
+
+    python fibo.py 
+
+    Running module as a script is useful for testing.
+
+    The followings are module search path, complied python files, would need
+to know them for now.
+
+    \subsubsection{Standard Modules}\label{standard-modules}
+
+    Python comes with a library of standart modules, description is in the
+Python library reference.
+
+Some modules are built into the interpreter; these provide access to
+operations that are not part of the core of the language but are
+nevertheless built in.
+
+Some modules also depend on the platform, i.e. windows/linux.
+
+One particular deserves some attention: sys, which is built into every
+Python interpreter. The variables sys.ps1 and sys.ps2 define the strings
+used as primary and secondary prompts, it can be changed accordingly:
+
+This two variables are only defined if the interpreter is in interactive
+mode.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{k+kn}{import} \PY{n+nn}{sys}
+         \PY{n}{sys}\PY{o}{.}\PY{n}{ps1}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} 'In : '
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{sys}\PY{o}{.}\PY{n}{ps2}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}20}]:} '{\ldots}: '
+\end{Verbatim}
+            
+    The variable sys.path is a list of strings that determines the
+interpreter's search path for modules. It is initialized to a default
+path taken from the environment variable PYTHONPATH, or from a built-in
+default if PYTHONPATH is not set. It can be modified using standard list
+operations:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{k+kn}{import} \PY{n+nn}{sys}
+         \PY{n}{sys}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZti{}\PYZti{}\PYZti{}\PYZti{}\PYZti{}\PYZti{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsubsection{The dir() function}\label{the-dir-function}
+
+    The built-in function dir() is used to find out which names a module
+defines. It returns a sorted list of strings:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{k+kn}{import} \PY{n+nn}{sys}
+         \PY{n+nb}{dir}\PY{p}{(}\PY{n}{sys}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}22}]:} ['\_\_displayhook\_\_',
+          '\_\_doc\_\_',
+          '\_\_excepthook\_\_',
+          '\_\_interactivehook\_\_',
+          '\_\_loader\_\_',
+          '\_\_name\_\_',
+          '\_\_package\_\_',
+          '\_\_spec\_\_',
+          '\_\_stderr\_\_',
+          '\_\_stdin\_\_',
+          '\_\_stdout\_\_',
+          '\_clear\_type\_cache',
+          '\_current\_frames',
+          '\_debugmallocstats',
+          '\_getframe',
+          '\_git',
+          '\_home',
+          '\_xoptions',
+          'abiflags',
+          'api\_version',
+          'argv',
+          'base\_exec\_prefix',
+          'base\_prefix',
+          'builtin\_module\_names',
+          'byteorder',
+          'call\_tracing',
+          'callstats',
+          'copyright',
+          'displayhook',
+          'dont\_write\_bytecode',
+          'exc\_info',
+          'excepthook',
+          'exec\_prefix',
+          'executable',
+          'exit',
+          'flags',
+          'float\_info',
+          'float\_repr\_style',
+          'get\_asyncgen\_hooks',
+          'get\_coroutine\_wrapper',
+          'getallocatedblocks',
+          'getcheckinterval',
+          'getdefaultencoding',
+          'getdlopenflags',
+          'getfilesystemencodeerrors',
+          'getfilesystemencoding',
+          'getprofile',
+          'getrecursionlimit',
+          'getrefcount',
+          'getsizeof',
+          'getswitchinterval',
+          'gettrace',
+          'hash\_info',
+          'hexversion',
+          'implementation',
+          'int\_info',
+          'intern',
+          'is\_finalizing',
+          'last\_traceback',
+          'last\_type',
+          'last\_value',
+          'maxsize',
+          'maxunicode',
+          'meta\_path',
+          'modules',
+          'path',
+          'path\_hooks',
+          'path\_importer\_cache',
+          'platform',
+          'prefix',
+          'ps1',
+          'ps2',
+          'ps3',
+          'set\_asyncgen\_hooks',
+          'set\_coroutine\_wrapper',
+          'setcheckinterval',
+          'setdlopenflags',
+          'setprofile',
+          'setrecursionlimit',
+          'setswitchinterval',
+          'settrace',
+          'stderr',
+          'stdin',
+          'stdout',
+          'thread\_info',
+          'version',
+          'version\_info',
+          'warnoptions']
+\end{Verbatim}
+            
+    Without arguments, dir() lists the names you have defined currently:
+
+It lists all types of names, modules, functions; excluding names of
+built-in functions and variables, they are defined in the standard
+module builtins.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n+nb}{dir}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}23}]:} ['In',
+          'Out',
+          '\_',
+          '\_12',
+          '\_13',
+          '\_16',
+          '\_19',
+          '\_20',
+          '\_22',
+          '\_6',
+          '\_8',
+          '\_\_',
+          '\_\_\_',
+          '\_\_builtin\_\_',
+          '\_\_builtins\_\_',
+          '\_\_doc\_\_',
+          '\_\_loader\_\_',
+          '\_\_name\_\_',
+          '\_\_package\_\_',
+          '\_\_spec\_\_',
+          '\_dh',
+          '\_i',
+          '\_i1',
+          '\_i10',
+          '\_i11',
+          '\_i12',
+          '\_i13',
+          '\_i14',
+          '\_i15',
+          '\_i16',
+          '\_i17',
+          '\_i18',
+          '\_i19',
+          '\_i2',
+          '\_i20',
+          '\_i21',
+          '\_i22',
+          '\_i23',
+          '\_i3',
+          '\_i4',
+          '\_i5',
+          '\_i6',
+          '\_i7',
+          '\_i8',
+          '\_i9',
+          '\_ih',
+          '\_ii',
+          '\_iii',
+          '\_oh',
+          'a',
+          'answers',
+          'basket',
+          'exit',
+          'f',
+          'fib',
+          'fib2',
+          'fibo',
+          'fibonacci',
+          'filtered\_data',
+          'get\_ipython',
+          'i',
+          'math',
+          'q',
+          'questions',
+          'quit',
+          'raw\_data',
+          'sys',
+          'v',
+          'value']
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{k+kn}{import} \PY{n+nn}{builtins}
+         \PY{n+nb}{dir}\PY{p}{(}\PY{n}{builtins}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} ['ArithmeticError',
+          'AssertionError',
+          'AttributeError',
+          'BaseException',
+          'BlockingIOError',
+          'BrokenPipeError',
+          'BufferError',
+          'BytesWarning',
+          'ChildProcessError',
+          'ConnectionAbortedError',
+          'ConnectionError',
+          'ConnectionRefusedError',
+          'ConnectionResetError',
+          'DeprecationWarning',
+          'EOFError',
+          'Ellipsis',
+          'EnvironmentError',
+          'Exception',
+          'False',
+          'FileExistsError',
+          'FileNotFoundError',
+          'FloatingPointError',
+          'FutureWarning',
+          'GeneratorExit',
+          'IOError',
+          'ImportError',
+          'ImportWarning',
+          'IndentationError',
+          'IndexError',
+          'InterruptedError',
+          'IsADirectoryError',
+          'KeyError',
+          'KeyboardInterrupt',
+          'LookupError',
+          'MemoryError',
+          'ModuleNotFoundError',
+          'NameError',
+          'None',
+          'NotADirectoryError',
+          'NotImplemented',
+          'NotImplementedError',
+          'OSError',
+          'OverflowError',
+          'PendingDeprecationWarning',
+          'PermissionError',
+          'ProcessLookupError',
+          'RecursionError',
+          'ReferenceError',
+          'ResourceWarning',
+          'RuntimeError',
+          'RuntimeWarning',
+          'StopAsyncIteration',
+          'StopIteration',
+          'SyntaxError',
+          'SyntaxWarning',
+          'SystemError',
+          'SystemExit',
+          'TabError',
+          'TimeoutError',
+          'True',
+          'TypeError',
+          'UnboundLocalError',
+          'UnicodeDecodeError',
+          'UnicodeEncodeError',
+          'UnicodeError',
+          'UnicodeTranslateError',
+          'UnicodeWarning',
+          'UserWarning',
+          'ValueError',
+          'Warning',
+          'ZeroDivisionError',
+          '\_\_IPYTHON\_\_',
+          '\_\_build\_class\_\_',
+          '\_\_debug\_\_',
+          '\_\_doc\_\_',
+          '\_\_import\_\_',
+          '\_\_loader\_\_',
+          '\_\_name\_\_',
+          '\_\_package\_\_',
+          '\_\_spec\_\_',
+          'abs',
+          'all',
+          'any',
+          'ascii',
+          'bin',
+          'bool',
+          'bytearray',
+          'bytes',
+          'callable',
+          'chr',
+          'classmethod',
+          'compile',
+          'complex',
+          'copyright',
+          'credits',
+          'delattr',
+          'dict',
+          'dir',
+          'display',
+          'divmod',
+          'enumerate',
+          'eval',
+          'exec',
+          'filter',
+          'float',
+          'format',
+          'frozenset',
+          'get\_ipython',
+          'getattr',
+          'globals',
+          'hasattr',
+          'hash',
+          'help',
+          'hex',
+          'id',
+          'input',
+          'int',
+          'isinstance',
+          'issubclass',
+          'iter',
+          'len',
+          'license',
+          'list',
+          'locals',
+          'map',
+          'max',
+          'memoryview',
+          'min',
+          'next',
+          'object',
+          'oct',
+          'open',
+          'ord',
+          'pow',
+          'print',
+          'property',
+          'range',
+          'repr',
+          'reversed',
+          'round',
+          'set',
+          'setattr',
+          'slice',
+          'sorted',
+          'staticmethod',
+          'str',
+          'sum',
+          'super',
+          'tuple',
+          'type',
+          'vars',
+          'zip']
+\end{Verbatim}
+            
+    \subsubsection{Packages}\label{packages}
+
+    Package is a collection of modules. An example:
+sound/                          Top-level package
+      __init__.py               Initialize the sound package
+      formats/                  Subpackage for file format conversions
+              __init__.py
+              wavread.py
+              wavwrite.py
+              aiffread.py
+              aiffwrite.py
+              auread.py
+              auwrite.py
+              ...
+      effects/                  Subpackage for sound effects
+              __init__.py
+              echo.py
+              surround.py
+              reverse.py
+              ...
+      filters/                  Subpackage for filters
+              __init__.py
+              equalizer.py
+              vocoder.py
+              karaoke.py
+              ...
+    When importing a package, Python searches through the directories on
+sys.path looking for the package subdirectory.
+
+The \textbf{init}.py files are required to make Python treat the
+directories as containing packages; this is done to prevent directories
+with a common name, such as string, from unintentionally hiding valid
+modules that occur later on the module search path. In the simplest
+case, \textbf{init}.py can just be an empty file, but it can also
+execute initialization code for the package or set the \textbf{all}
+variable, described later.
+
+    Individual modules can be imported from a package
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{k+kn}{import} \PY{n+nn}{sound}\PY{n+nn}{.}\PY{n+nn}{effects}\PY{n+nn}{.}\PY{n+nn}{echo}    \PY{c+c1}{\PYZsh{} just an example, not a real package. This must be referenced with a full name.}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ModuleNotFoundError                       Traceback (most recent call last)
+
+        <ipython-input-25-fc07412d5a70> in <module>()
+    ----> 1 import sound.effects.echo
+    
+
+        ModuleNotFoundError: No module named 'sound'
+
+    \end{Verbatim}
+
+    another way to import the echo module: this way we don't need to write
+the full name when calling it (talked about functions before similar to
+this.)
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{k+kn}{from} \PY{n+nn}{sound}\PY{n+nn}{.}\PY{n+nn}{effects} \PY{k}{import} \PY{n}{echo}    \PY{c+c1}{\PYZsh{} here echo is a module. echo is able to be referenced without the full name.}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ModuleNotFoundError                       Traceback (most recent call last)
+
+        <ipython-input-26-4c42e49b3ae5> in <module>()
+    ----> 1 from sound.effects import echo
+    
+
+        ModuleNotFoundError: No module named 'sound'
+
+    \end{Verbatim}
+
+    Also possible to import a function from a module in a package directly:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{k+kn}{from} \PY{n+nn}{sound}\PY{n+nn}{.}\PY{n+nn}{effects}\PY{n+nn}{.}\PY{n+nn}{echo} \PY{k}{import} \PY{n}{echofilter}    \PY{c+c1}{\PYZsh{} echofilter is a function, reference it directly without full name.}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ModuleNotFoundError                       Traceback (most recent call last)
+
+        <ipython-input-27-c0f5183bc1f1> in <module>()
+    ----> 1 from sound.effects.echo import echofilter    \# echofilter is a function, reference it directly without full name.
+    
+
+        ModuleNotFoundError: No module named 'sound'
+
+    \end{Verbatim}
+
+    Contrarily, when using syntax like \textbf{import
+item.subitem.subsubitem}, each item except for the last must be a
+package; the last item can be a module or a package but can't be a class
+or function or variable defined in the previous item.
+
+    \paragraph{Importing form a package}\label{importing-form-a-package}
+
+好复杂 不想看
+
+    \paragraph{Intra-package References}\label{intra-package-references}
+
+不看不看
+
+    \paragraph{packages in mltiple
+directories}\label{packages-in-mltiple-directories}
+
+还是不看。
+
+    \subsection{Input and Output}\label{input-and-output}
+
+    \subsubsection{Fancier Output
+Formatting}\label{fancier-output-formatting}
+
+    \begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  formatted string literals:
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  begin a string with f or F before the opeing quotation mark or triple
+  quotation mark. Inside the string, wirte a Python expression between
+  \{ and \} that can refer to variables or literal values.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{year} \PY{o}{=} \PY{l+m+mi}{2016}
+         \PY{n}{event} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Referendum}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Results of the }\PY{l+s+si}{\PYZob{}year\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}event\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}28}]:} 'Results of the 2016 Referendum'
+\end{Verbatim}
+            
+    \begin{itemize}
+\tightlist
+\item
+  str.format() method needs more manual effort. Still use \{ and \} to
+  mark where a variable will be substituted and can provide detailed
+  formatting directives, but you'll also need to provide the information
+  to be formatted.
+\end{itemize}
+
+我理解是\{\} 花括号中间的字符是控制输出格式的命令 嗯
+肯定是。此处应该看string.format(\emph{args, *}kwargs)
+
+    The string on which this method is called can contain literal text or
+replacement fields delimited by braces \{\}. Each replacement field
+contains either \textbf{the numeric index} of a positional argument, or
+\textbf{the name of a keyword argument}, also check \textbf{Format
+String Syntax} for the details.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{yes\PYZus{}votes} \PY{o}{=} \PY{l+m+mi}{42}\PY{n}{\PYZus{}572\PYZus{}654}
+         \PY{n}{no\PYZus{}votes} \PY{o}{=} \PY{l+m+mi}{43}\PY{n}{\PYZus{}132\PYZus{}495}
+         \PY{n}{percentage} \PY{o}{=} \PY{n}{yes\PYZus{}votes} \PY{o}{/} \PY{p}{(}\PY{n}{yes\PYZus{}votes} \PY{o}{+} \PY{n}{no\PYZus{}votes}\PY{p}{)}
+         \PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}:\PYZhy{}9\PYZcb{}}\PY{l+s+s1}{ YES votes  }\PY{l+s+si}{\PYZob{}:2.2\PYZpc{}\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{yes\PYZus{}votes}\PY{p}{,} \PY{n}{percentage}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}29}]:} ' 42572654 YES votes  49.67\%'
+\end{Verbatim}
+            
+    \begin{itemize}
+\tightlist
+\item
+  still can use string slicing and concatenation operations.
+\end{itemize}
+
+    For a quick display of some variables for debugging purposes, any value
+can be converted to a string with the \emph{repr()} or \emph{str()}
+functions.
+
+\begin{itemize}
+\tightlist
+\item
+  str(): human-readable
+\item
+  repr(): generate representations which can be read by the interpreter.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{s} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hello, world.}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{str}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} 'Hello, world.'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{s}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 注意跟上边的区别，此处多了一个双引号，因为repr()的输出是给编译器看的。}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}31}]:} "'Hello, world.'"
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n+nb}{str}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{7}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}32}]:} '0.14285714285714285'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{n+nb}{repr}\PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{7}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}33}]:} '0.14285714285714285'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{x} \PY{o}{=} \PY{l+m+mi}{10} \PY{o}{*} \PY{l+m+mf}{3.25}
+         \PY{n}{y} \PY{o}{=} \PY{l+m+mi}{200} \PY{o}{*} \PY{l+m+mi}{200}
+         \PY{n}{s} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The value of x is }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, and y is }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{...}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The value of x is 32.5, and y is 40000{\ldots}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{n}{ss} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The value of x is }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{x}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{, and y is }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n+nb}{str}\PY{p}{(}\PY{n}{y}\PY{p}{)} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{...}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{ss}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The value of x is 32.5, and y is 40000{\ldots}
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n}{hello} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hello world}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{hello}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{hello}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{str}\PY{p}{(}\PY{n}{hello}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{}跟直接print(hello)效果一样}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*}\PY{l+s+s1}{\PYZsq{}} \PY{o}{*} \PY{l+m+mi}{10}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+hello world
+
+'hello world\textbackslash{}n'
+hello world
+
+**********
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{n+nb}{repr}\PY{p}{(}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{y}\PY{p}{,} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eggs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} the argument to repr() can be any python object}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}39}]:} "(32.5, 40000, ('spam', 'eggs'))"
+\end{Verbatim}
+            
+    \paragraph{More on Formatted String
+Literals}\label{more-on-formatted-string-literals}
+
+    optional format specifier: allows greater control over how the value is
+formatted.
+
+The following example rounds pi to three places ater the decimal.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}40}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The value of pi is approximately }\PY{l+s+si}{\PYZob{}math.pi:.3f\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The value of pi is approximately 3.142
+
+    \end{Verbatim}
+
+    Passing an integer after the ':' will cause that field to be a minimum
+number of characters wide. This is useful for making columns line up.
+
+只有一个数字：字符靠左，空格靠右；
+
+数字d：字符靠右，空格靠左。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{n}{table} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sjoerd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4127}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4098}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dcab}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{7678}\PY{p}{\PYZcb{}}
+         \PY{k}{for} \PY{n}{name}\PY{p}{,} \PY{n}{phone} \PY{o+ow}{in} \PY{n}{table}\PY{o}{.}\PY{n}{items}\PY{p}{(}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}name:10\PYZcb{}}\PY{l+s+s1}{ ==\PYZgt{} }\PY{l+s+si}{\PYZob{}phone:10d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}    
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Sjoerd     ==>       4127
+Jack       ==>       4098
+Dcab       ==>       7678
+
+    \end{Verbatim}
+
+    Other modifiers can be used to convet the value before it is formatted:
+'!a' applies ascii(), '!s' applies str(), '!r' applies repr():
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{n}{animals} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eels}\PY{l+s+s1}{\PYZsq{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{My hovercraft is full of }\PY{l+s+si}{\PYZob{}animals\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{My hovercraft is full of }\PY{l+s+si}{\PYZob{}animals!r\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+My hovercraft is full of eels.
+My hovercraft is full of 'eels'.
+
+    \end{Verbatim}
+
+    For a reference on these format specifications, see the reference guide
+for the
+\href{https://docs.python.org/3/tutorial/inputoutput.html}{Format
+Specifiction Mini-Language}
+
+    \paragraph{More on The String format()
+mathod}\label{more-on-the-string-format-mathod}
+
+    basic use of the str.format() method looks like this:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}43}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{We are the }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{ who say }\PY{l+s+s1}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{!}\PY{l+s+s1}{\PYZdq{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{knights}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ni}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+We are the knights who say "Ni!"
+
+    \end{Verbatim}
+
+    A number in the brackets can be used to refer to the position of the
+object passed into the str.format() method.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}44}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{ and }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eggs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{ and }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{eggs}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+spam and eggs
+eggs and spam
+
+    \end{Verbatim}
+
+    If keyword arguments are used in the str.format() mathod, their values
+are refered to by using the name of the argument.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}45}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{This }\PY{l+s+si}{\PYZob{}food\PYZcb{}}\PY{l+s+s1}{ is }\PY{l+s+si}{\PYZob{}adjective\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{food}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{spam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{adjective}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{absolutely horrible}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This spam is absolutely horrible.
+
+    \end{Verbatim}
+
+    Positional and keyword argument can be arbitrarily combined:
+
+BUT, keyword argument have to be referenced by the key!!! Blank does not
+work.
+
+Positional arguement have to be all referenced by the index, OR all be
+blank!!!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The story of }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s1}{, }\PY{l+s+si}{\PYZob{}1\PYZcb{}}\PY{l+s+s1}{, and }\PY{l+s+si}{\PYZob{}other\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bill}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Manfred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{other}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Georg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The story of Bill, Manfred, and Georg.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The story of }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s1}{, and }\PY{l+s+si}{\PYZob{}other\PYZcb{}}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Bill}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Manfred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{other}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Georg}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The story of Bill, Manfred, and Georg.
+
+    \end{Verbatim}
+
+    If you have a really long format string that you don't want to split up,
+it would be nice if you could reference the variables to be formatted by
+name instead of by position. This can be done by simply passing the dict
+and using square brackets '{[}{]}' to access the keys
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{n}{table} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sjoerd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4127}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4098}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dcab}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8637678}\PY{p}{\PYZcb{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Jack: }\PY{l+s+si}{\PYZob{}0[Jack]:d\PYZcb{}}\PY{l+s+s1}{; Sjoerd: }\PY{l+s+si}{\PYZob{}0[Sjoerd]:d\PYZcb{}}\PY{l+s+s1}{; Dcab: }\PY{l+s+si}{\PYZob{}0[Dcab]:d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{table}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Jack: 4098; Sjoerd: 4127; Dcab: 8637678
+
+    \end{Verbatim}
+
+    This could also be done by passing the table as keyword arguments with
+the `**' notation.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{n}{table} \PY{o}{=} \PY{p}{\PYZob{}}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sjoerd}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4127}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Jack}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{4098}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Dcab}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:} \PY{l+m+mi}{8637678}\PY{p}{\PYZcb{}}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Jack: }\PY{l+s+si}{\PYZob{}Jack:d\PYZcb{}}\PY{l+s+s1}{; Sjoerd: }\PY{l+s+si}{\PYZob{}Sjoerd:d\PYZcb{}}\PY{l+s+s1}{; Dcab: }\PY{l+s+si}{\PYZob{}Dcab:d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{o}{*}\PY{o}{*}\PY{n}{table}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Jack: 4098; Sjoerd: 4127; Dcab: 8637678
+
+    \end{Verbatim}
+
+    This is particularly useful in combination with the built-in function
+vars(), which returns a dictionary containing all local variables.
+
+As an example, the following lines produce a tidily-aligned set of
+columns giving integers and their squares and cubes:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}73}]:} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}0:2d\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}1:3d\PYZcb{}}\PY{l+s+s1}{ }\PY{l+s+si}{\PYZob{}2:4d\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{o}{*}\PY{n}{x}\PY{p}{,} \PY{n}{x}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 0，1，2 是position，}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ 1   1    1
+ 2   4    8
+ 3   9   27
+ 4  16   64
+ 5  25  125
+ 6  36  216
+ 7  49  343
+ 8  64  512
+ 9  81  729
+10 100 1000
+
+    \end{Verbatim}
+
+    \paragraph{Manual String formatting}\label{manual-string-formatting}
+
+    Here's the same table of squares and cubes, formatted manually:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}74}]:} \PY{k}{for} \PY{n}{x} \PY{o+ow}{in} \PY{n+nb}{range} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{11}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{rjust}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}\PY{p}{,} \PY{n+nb}{repr}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{n}{x}\PY{p}{)}\PY{o}{.}\PY{n}{rjust}\PY{p}{(}\PY{l+m+mi}{3}\PY{p}{)}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}\PY{p}{)}\PY{o}{.}\PY{n}{rjust}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+ 1   1    1
+ 2   4    8
+ 3   9   27
+ 4  16   64
+ 5  25  125
+ 6  36  216
+ 7  49  343
+ 8  64  512
+ 9  81  729
+10 100 1000
+
+    \end{Verbatim}
+
+    (Note that the one space between each column was added by the way
+print() works: it always adds spaces between its arguments.)
+
+    The str.rjust() method of string objects right-justifies a string in a
+field of a given width by padding it with spaces on the left. There are
+similar methods str.ljust() and str.center(). These methods do not write
+anything, they just return a new string. If the input string is too
+long, they don't truncate it, but return it unchanged; this will mess up
+your column lay-out but that's usually better than the alternative,
+which would be lying about a value. (If you really want truncation you
+can always add a slice operation, as in x.ljust(n){[}:n{]}.)
+
+    There is another method, str.zfill(), which pads a numeric string on the
+left with zeros. It understands about plus and minus signs:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}75}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{12}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{zfill}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}75}]:} '00012'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}76}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}3.14}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{zfill}\PY{p}{(}\PY{l+m+mi}{7}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}76}]:} '-003.14'
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}77}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{3.14159265359}\PY{l+s+s1}{\PYZsq{}}\PY{o}{.}\PY{n}{zfill}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}77}]:} '3.14159265359'
+\end{Verbatim}
+            
+    \paragraph{Old string formatting:}\label{old-string-formatting}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}78}]:} \PY{k+kn}{import} \PY{n+nn}{math}
+         \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{The value of pi is approximately }\PY{l+s+si}{\PYZpc{}5.3f}\PY{l+s+s1}{.}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+The value of pi is approximately 3.142.
+
+    \end{Verbatim}
+
+    \subsubsection{Reading and Writing
+Files}\label{reading-and-writing-files}
+
+    open() returns a file object, and is most commonly used with two
+arguments: open(file, mode):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}79}]:} \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{filename}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{w}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    mode: * r: read only, default mode when mode is omitted. * w: only
+write, an EXISTING file with the same name will be erased * a: open the
+file for appending, any added data written to the file is automatically
+added to the end. * r+: opens the file for both reading and writing
+
+    'b' appended to the mode opens the file in \textbf{binary mode}: this
+mode should be used for all files that don't contain text.
+
+In the text mode, the default when \textbf{reading} is to convert
+platform-specific line endings (\n on Unix, \r\n on Windows) to just \n.
+When \textbf{writing} in text mode, the default is to convert
+occurrences of \n back to platform specific line endings. This
+background modification to file data is fine for text files, but will
+corrupt binary data like that in \emph{JPEG} or \emph{EXE} files.
+
+It is good practice to use the \textbf{with} keyword when dealing with
+file objects. The advantage is that the file is properly closed after
+its suite finishes, even if an exception is raised at some point. Using
+\textbf{with} is also much shorter than writing equivalent
+\textbf{try-finally} blocks:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+            \PY{n}{read\PYZus{}data} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{closed}    \PY{c+c1}{\PYZsh{} 它的输出是bool，很奇怪\PYZti{}}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}1}]:} True
+\end{Verbatim}
+            
+    If not using \textbf{with} keyword, then you should call f.close() to
+close the file.
+
+After the file is closed, attempts to use the file object will
+automatically fail.
+
+    \paragraph{Methods on File Objects}\label{methods-on-file-objects}
+
+    The following examples will assume that a file object called \emph{f}
+has already been created.
+
+To read a file's contents, call f.read({[}byte\_size{]}), which reads
+some quantity of data and returns it as a string (string mode) or bytes
+object (byte mode). byte\_size is an optional numeric argument. When
+byte\_size is omitted or negative, the entire contens of the file will
+be read and returned.
+
+If the end of the file has been reached, f.read() will return an empty
+string ('').
+
+    \textbf{f.readline()} reads a single line from the file; a newline
+character (\n) is left at the end of the string, and is only omitted on
+the last line of the file if the file doesn't end in a newline.
+(换行符号，\n 只有在整个文档的最后一行才会没有)
+
+\begin{itemize}
+\tightlist
+\item
+  .readline() returns an empty string, the end of the file been reached
+\item
+  .readline() returns '\n', that is a blank line.
+\end{itemize}
+
+    For reading lines from a file, you can loop over the file object. This
+is memory efficient, fast and leads to simple code:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{f}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{line}\PY{p}{)}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 这个最后一行也是以\PYZbs{}n结尾的呀。上边说的也不准呀}
+         \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+'This is a test.\textbackslash{}n'
+'ile line one.\textbackslash{}n'
+'This is line two.\textbackslash{}n'
+'This is line three, and line four will be blank.\textbackslash{}n'
+'\textbackslash{}n'
+'This is line five and the final line.\textbackslash{}n'
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{6}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+'This is a test file line one.\textbackslash{}n'
+'This is line two.\textbackslash{}n'
+'This is line three, and line four will be blank.\textbackslash{}n'
+'\textbackslash{}n'
+'This is line five and the final line.\textbackslash{}n'
+''
+
+    \end{Verbatim}
+
+    If want to read all the lines of a file in a list, can also use
+\textbf{list(f)} or \textbf{f.readlines()}.
+
+    \textbf{f.write(string)} writes the contents of string to the file,
+returning the number of characters written.
+
+.write funciton 从光标所在位置写入，open()默认打开文件开始的位置。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{This is a test.}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+         \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This This is a test.
+is line one.
+This is line two.
+This is line three, and line four will be blank.
+
+This is line five and the final line.
+This is a test.
+
+
+    \end{Verbatim}
+
+    Other types of objects need to be converted - either to a string or a
+bytes object, before writing them.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{value} \PY{o}{=} \PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{the answer}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+m+mi}{42}\PY{p}{)}
+        \PY{n}{s} \PY{o}{=} \PY{n+nb}{str}\PY{p}{(}\PY{n}{value}\PY{p}{)}
+        \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{s}\PY{p}{)}
+\end{Verbatim}
+
+
+    f.tell() returns an integer giving the file object's current position in
+the file represented as number of bytes from the beginning of the file
+when in binary mode and an opaque number when in text mode.
+
+To change the file object's position, use f.seek(offset, from\_what).
+The position is computed from adding \textbf{offset} to a reference
+point; the reference point is selected by the \textbf{from\_what}
+argument:
+
+\textbf{from\_what}: * 0: measures from the beginning of the file * 1:
+measures from the current position * 2: the end of the file.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{workfile}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{rb+}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 注意这里是binary mode}
+        \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{l+s+sa}{b}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{0123456789abcdef}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{f}\PY{o}{.}\PY{n}{seek}\PY{p}{(}\PY{l+m+mi}{5}\PY{p}{)}    \PY{c+c1}{\PYZsh{} Go to the 6th byte in the file}
+        \PY{n}{f}\PY{o}{.}\PY{n}{seek}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}    \PY{c+c1}{\PYZsh{} go to the end of the file}
+        \PY{n}{f}\PY{o}{.}\PY{n}{seek}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{)}   \PY{c+c1}{\PYZsh{} Go to the 3rd byte before the end}
+\end{Verbatim}
+
+
+    In \textbf{text files} (those opened without a \emph{b} in the mode
+string), only seeks relative to the beginnning of the file are allowed
+(the exception being seeking to the very file end with seek(0, 2)) and
+the only valid offset values are those returned from the f.tell(), or
+zero. Any other \textbf{offset} value produces undefined behaviour.
+
+    \paragraph{Saving structured data with json (JavaScript Object
+Notation)}\label{saving-structured-data-with-json-javascript-object-notation}
+
+Strings can be easily written to and read from a file.
+
+Numbers take a bit more effort, since the read() method only returns
+strings, which will have to be passed to a function like int()。
+
+Rather than having users constantly writing and debugging code to save
+complicated data types to files, Python allows you to use the popular
+data interchange format called JSON (JavaScript Object Notation). The
+standard module called json can take Python data hierarchies, and
+convert them to string representations; this process is called
+\textbf{serializing}. Reconstructing the data from the string
+representation is called deserializing. Between serializing and
+deserializing, the string representing the object may have been stored
+in a file or data, or sent over a network connection to some distant
+machine.
+
+The JSON format is commonly used by modern applications to allow for
+\textbf{data exchange}.
+
+    If you have an object \textbf{x}, to view its JSON string:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{k+kn}{import} \PY{n+nn}{json}
+         \PY{n}{json}\PY{o}{.}\PY{n}{dumps}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{simple}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{list}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:} '[1, "simple", "list"]'
+\end{Verbatim}
+            
+    Another variant of the dumps() function, called dump(), simply
+serializes the object to a text file. So we can write x to a text file
+like this:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{n}{json}\PY{o}{.}\PY{n}{dump}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{f}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-31-83ec06b0df75> in <module>()
+    ----> 1 json.dump(x, f)
+    
+
+        NameError: name 'x' is not defined
+
+    \end{Verbatim}
+
+    To decode the object again, if f is a text file object which has been
+opened for reading:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{x} \PY{o}{=} \PY{n}{json}\PY{o}{.}\PY{n}{load}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+\end{Verbatim}
+
+
+    The above simple serialization technique can handle lists and
+dictionaries, but serializing arbitrary class instances in JSON requires
+a bit of extra effort. the json module explains more.
+
+    \textbf{pickle} - the pickle module
+
+Contrary to JSON, pickle is a protocol which allows the serialization of
+arbitrarily complex Python objects. It is specific to Python and cannot
+be used to communicate with applications written in other languages. It
+is also insecure by default.
+
+    \subsection{Errors and Exceptions}\label{errors-and-exceptions}
+
+    Two distinguishable kinds of errors: * syntax errors * exceptions
+
+    \subsubsection{Syntax Errors}\label{syntax-errors}
+
+Also known as parsing errors, the most common errors.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{k}{while} \PY{k+kc}{True} \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hello world}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+          File "<ipython-input-32-2b688bc740d7>", line 1
+        while True print('Hello world')
+                       \^{}
+    SyntaxError: invalid syntax
+
+
+    \end{Verbatim}
+
+    The parser repeats the offending line and displays a little 'arrow'
+pointing at the earliest point in the line where the error was detected.
+The error is caused by (or at least detected at) the token
+\textbf{preceding} the arrow:
+
+in the above example, the error is detected at the function print(),
+since a colon is missing before it. File name and line number are
+printed so you know where to look in case the input came from a script.
+
+    \paragraph{Exceptions}\label{exceptions}
+
+Even if a statement or expression is syntactically correct, it may cause
+an error when an attempt is made to execute it. Errors detected during
+execution are called \textbf{exceptions} and are not unconditionally
+fatal.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{l+m+mi}{10} \PY{o}{*} \PY{p}{(}\PY{l+m+mi}{1}\PY{o}{/}\PY{l+m+mi}{0}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ZeroDivisionError                         Traceback (most recent call last)
+
+        <ipython-input-33-0b280f36835c> in <module>()
+    ----> 1 10 * (1/0)
+    
+
+        ZeroDivisionError: division by zero
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{l+m+mi}{4} \PY{o}{+} \PY{n}{spam}\PY{o}{*}\PY{l+m+mi}{3}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-34-c98bb92cdcac> in <module>()
+    ----> 1 4 + spam*3
+    
+
+        NameError: name 'spam' is not defined
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{2}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{l+m+mi}{2}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        TypeError                                 Traceback (most recent call last)
+
+        <ipython-input-35-d2b23a1db757> in <module>()
+    ----> 1 '2' + 2
+    
+
+        TypeError: must be str, not int
+
+    \end{Verbatim}
+
+    The last line of the error message indicates what happened. Exceptions
+come in different types, and the type is printed as part of the message:
+* ZeroDivisionError * NameError * TypeError
+
+Go to take a look at the Built-in Exceptions lists to see the exceptions
+and their meaning.
+
+    \subsubsection{Handling Exceptions}\label{handling-exceptions}
+
+The following example: asks the user for input until a valid integer has
+been entered, but allows the user to interrupt the program; note that a
+user-generated interruption is signalled by raising the
+\textbf{KeyboardInterrupt} exception.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}49}]:} \PY{k}{while} \PY{k+kc}{True}\PY{p}{:}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{n}{x} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n+nb}{input}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Please enter a number: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{you entered }\PY{l+s+si}{\PYZob{}x\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{k}{break}
+             \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Oops! That was no valid number. Try again...}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Please enter a number: a
+Oops! That was no valid number. Try again{\ldots}
+Please enter a number: 12
+you entered 12
+
+    \end{Verbatim}
+
+    The try statement works as follows.
+
+\begin{itemize}
+\tightlist
+\item
+  First, the \textbf{try} clause (the statements between the try and
+  except keywords) is executed.
+\item
+  If no exception occurs, the \textbf{except clause} is skipped and
+  execution of the try statment is finished.
+\item
+  If an exception occurs during execution of the \textbf{try} clause,
+  the rest of the clause is skipped. Then if its type matches the
+  exception named after the \textbf{except} keyword, the except clause
+  is executed, and then execution continues after the \textbf{try}
+  statement.
+\item
+  If an exception occurs which does not match the exception named in the
+  except clause, it is passed on to outer \textbf{try} statements; if no
+  handler is found, it is an unhandled exception and execution stops
+  with a message as shown above.
+\end{itemize}
+
+    A \textbf{try} statement can have more than one except clause, to
+specify handlers for different exceptions. At most one handler will be
+executed. An except clause may name multiple exceptions as a
+parenthesized tuple, for example:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}39}]:} \PY{k}{try}\PY{p}{:}
+             \PY{k}{pass}
+         \PY{k}{except} \PY{p}{(}\PY{n+ne}{RuntimeError}\PY{p}{,} \PY{n+ne}{TypeError}\PY{p}{,} \PY{n+ne}{NameError}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+\end{Verbatim}
+
+
+    A class in an \textbf{except} clause is compatible with an exception if
+it is the same class or a base class thereof (but not the other way
+around - an except clause listing a derived class is not compatible with
+a base class).
+
+多个except
+只有第一个满足条件的会被执行，如下两个例子，D是C的子类，C是B的子类。对比两个离子的结果即可分清。
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}41}]:} \PY{k}{class} \PY{n+nc}{B}\PY{p}{(}\PY{n+ne}{Exception}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{class} \PY{n+nc}{C}\PY{p}{(}\PY{n}{B}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{class} \PY{n+nc}{D}\PY{p}{(}\PY{n}{C}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{for} \PY{n+nb+bp}{cls} \PY{o+ow}{in} \PY{p}{[}\PY{n}{B}\PY{p}{,} \PY{n}{C}\PY{p}{,} \PY{n}{D}\PY{p}{]}\PY{p}{:}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{k}{raise} \PY{n+nb+bp}{cls}\PY{p}{(}\PY{p}{)}    \PY{c+c1}{\PYZsh{} 这个raise的功能暂时不懂，下边会讲。}
+             \PY{k}{except} \PY{n}{D}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{except} \PY{n}{C}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{except} \PY{n}{B}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+B
+C
+D
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}42}]:} \PY{k}{class} \PY{n+nc}{B}\PY{p}{(}\PY{n+ne}{Exception}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{class} \PY{n+nc}{C}\PY{p}{(}\PY{n}{B}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{class} \PY{n+nc}{D}\PY{p}{(}\PY{n}{C}\PY{p}{)}\PY{p}{:}
+             \PY{k}{pass}
+         
+         \PY{k}{for} \PY{n+nb+bp}{cls} \PY{o+ow}{in} \PY{p}{[}\PY{n}{D}\PY{p}{,} \PY{n}{C}\PY{p}{,} \PY{n}{B}\PY{p}{]}\PY{p}{:}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{k}{raise} \PY{n+nb+bp}{cls}\PY{p}{(}\PY{p}{)}
+             \PY{k}{except} \PY{n}{D}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{D}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{except} \PY{n}{C}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{C}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+             \PY{k}{except} \PY{n}{B}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{B}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+D
+C
+B
+
+    \end{Verbatim}
+
+    The last except clause may omit the exception name(s), to serve as a
+wildcard. Use this with extreme caution, since it is easy to mask a real
+programming error in this way! It can also be used to print an error
+message and then re-raise the exception (allowing a caller to handle the
+exception as well):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}48}]:} \PY{k+kn}{import} \PY{n+nn}{sys}
+         
+         \PY{k}{try}\PY{p}{:}
+             \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{n}{s} \PY{o}{=} \PY{n}{f}\PY{o}{.}\PY{n}{readline}\PY{p}{(}\PY{p}{)}
+             \PY{n}{i} \PY{o}{=} \PY{n+nb}{int}\PY{p}{(}\PY{n}{s}\PY{o}{.}\PY{n}{strip}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{k}{except} \PY{n+ne}{OSError} \PY{k}{as} \PY{n}{err}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{OS error: }\PY{l+s+si}{\PYZob{}0\PYZcb{}}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{err}\PY{p}{)}\PY{p}{)}
+         \PY{k}{except} \PY{n+ne}{ValueError}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Could not convert data to an integer.}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{k}{except}\PY{p}{:}    \PY{c+c1}{\PYZsh{} raise暂时不懂 下边还会讲}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unexcepted error:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sys}\PY{o}{.}\PY{n}{exc\PYZus{}info}\PY{p}{(}\PY{p}{)}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}    \PY{c+c1}{\PYZsh{}这里不懂}
+             \PY{k}{raise}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Could not convert data to an integer.
+
+    \end{Verbatim}
+
+    The try ... except statement has an optional else clause, which, when
+present, must follow all except clauses. It is useful for code that must
+be executed if the try clause \textbf{does not} raise an exception:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}46}]:} \PY{k}{for} \PY{n}{arg} \PY{o+ow}{in} \PY{n}{sys}\PY{o}{.}\PY{n}{argv}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{:}\PY{p}{]}\PY{p}{:}
+             \PY{k}{try}\PY{p}{:}
+                 \PY{n}{f} \PY{o}{=} \PY{n+nb}{open}\PY{p}{(}\PY{n}{arg}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{r}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{k}{except} \PY{n+ne}{OSError}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{cannot open}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{arg}\PY{p}{)}
+             \PY{k}{else}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{arg}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{has}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{readlines}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{lines}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+                 \PY{n}{f}\PY{o}{.}\PY{n}{close}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+cannot open -f
+/Users/jianbinliu/Library/Jupyter/runtime/kernel-355154af-82cb-47be-9ddf-a3ea4edb8558.json has 12 lines
+
+    \end{Verbatim}
+
+    The use of the else clause is better than adding additional code to the
+try clause because it avoids accidentally catching an exception that
+wasn't raised by the code being protected by the try ... except
+statement.
+
+When an exception occurs, it may have an associated value, also known as
+the exception's argument. The presence and type of the argument depend
+on the exception type.
+
+The except clause may specify a variable after the exception name. The
+variable is bound to an exception instance with the arguements stored in
+\textbf{instance.args}. For convenience, the exception instance defines
+\textbf{\_\_str\_\_()} so the arguments can be printed directly without
+having to reference .args.
+
+这部分讲的东西有些还是不太懂，先就这样了。以后用得到时再仔细研究。
+
+    \subsubsection{Raising Exceptions}\label{raising-exceptions}
+
+The \textbf{raise} statement allows the programmer to force a specified
+exception to occur:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}50}]:} \PY{k}{raise} \PY{n+ne}{NameError}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HiThere}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-50-72c183edb298> in <module>()
+    ----> 1 raise NameError('HiThere')
+    
+
+        NameError: HiThere
+
+    \end{Verbatim}
+
+    The sole argument indicates the exception to be raised. This must be
+either an exception instance or an exception class (a class that derives
+from \textbf{Exception}). If an exception class is passed, it will be
+implicitly instantiated by calling its constructor with no arguments:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}51}]:} \PY{k}{raise} \PY{n+ne}{ValueError}    \PY{c+c1}{\PYZsh{} shorthand for \PYZsq{}raise ValueError()\PYZsq{}}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        ValueError                                Traceback (most recent call last)
+
+        <ipython-input-51-45550f83e55d> in <module>()
+    ----> 1 raise ValueError    \# shorthand for 'raise ValueError()'
+    
+
+        ValueError: 
+
+    \end{Verbatim}
+
+    If you need to determine whether an exception was raised but don't
+intend to handle it, a simpler form of the raise statement allows you to
+re-raise the exception:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}52}]:} \PY{k}{try}\PY{p}{:}
+             \PY{k}{raise} \PY{n+ne}{NameError}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{HiThere}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         \PY{k}{except} \PY{n+ne}{NameError}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{An exception flew by!}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+             \PY{k}{raise}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+An exception flew by!
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-52-bf6ef4926f8c> in <module>()
+          1 try:
+    ----> 2     raise NameError('HiThere')
+          3 except NameError:
+          4     print('An exception flew by!')
+          5     raise
+
+
+        NameError: HiThere
+
+    \end{Verbatim}
+
+    \subsubsection{User-defined Exceptions}\label{user-defined-exceptions}
+
+Exceptions should typically be derived from the \emph{Exception} class,
+either directly or indirectly.
+
+Exception classes can be defined which do anything any other class can
+do, but are usually kept simple, often only offering a number of
+attributes that allow information about the error to be extracted by
+handlers for he exception.
+
+Many standard modules define their own exceptions to report errors that
+may occur in functions they define.
+详细内容去看tutorial。用到的时候再来看。
+
+    \subsubsection{Defining Clean-up
+Actions}\label{defining-clean-up-actions}
+
+The \textbf{try} statement has another optional clause which is intended
+to define clean-up actions that must be executed under all
+circumstances:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}53}]:} \PY{k}{try}\PY{p}{:}
+             \PY{k}{raise} \PY{n}{keyboardInterrupt}
+         \PY{k}{finally}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Goodbye, world!}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Goodbye, world!
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        NameError                                 Traceback (most recent call last)
+
+        <ipython-input-53-49d64e6afd61> in <module>()
+          1 try:
+    ----> 2     raise keyboardInterrupt
+          3 finally:
+          4     print('Goodbye, world!')
+
+
+        NameError: name 'keyboardInterrupt' is not defined
+
+    \end{Verbatim}
+
+    \textbf{finally} statement is \textbf{always} executed before leaving
+the \textbf{try} statement, whether an exception has occurred or not.
+
+When an exception has occurred in the try clause and has not been
+handled by an except clause, it is re-raised afer the finally clause has
+been executed.
+
+The finally clause is also executed on the way out when any other clause
+of the try statement is left via a break, continue or return statement.
+
+    \subsubsection{Predifined clean-up
+Actions}\label{predifined-clean-up-actions}
+
+The following example has a problem that it leaves the file open for an
+indeterminate amount of time after this part of the code has finished
+executing. Could be an issue for larger applications.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}54}]:} \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+             \PY{n+nb}{print}\PY{p}{(}\PY{n}{line}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This This is a test.
+is line one.
+This is line two.
+This is line three, and line four will be blank.
+
+This is line five and the final line.
+This is a test.
+
+    \end{Verbatim}
+
+    The \textbf{with} statement allows objects like files to be used in a
+way that ensures they are always cleaned up promptly and correctly.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}55}]:} \PY{k}{with} \PY{n+nb}{open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{new\PYZus{}file.txt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+             \PY{k}{for} \PY{n}{line} \PY{o+ow}{in} \PY{n}{f}\PY{p}{:}
+                 \PY{n+nb}{print}\PY{p}{(}\PY{n}{line}\PY{p}{,} \PY{n}{end}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+This This is a test.
+is line one.
+This is line two.
+This is line three, and line four will be blank.
+
+This is line five and the final line.
+This is a test.
+
+    \end{Verbatim}
+
+    After the statement is executed, the file \textbf{f} is always closed,
+even if a problem was encountered while processing the lines.
+
+    \subsection{Classes}\label{classes}
+
+Creating a new class creates a new type of object, allowing new
+instances of that type to be made.
+
+Each class instance can have attributes for maintaining its state.Class
+instances can also have mehtods for modifying its state.
+
+Pythone classes provide all standard features of OOP: * allows multiple
+base classes * a derived class can override any methods of its base
+classes * a method can call the method of a base class with the same
+name
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
